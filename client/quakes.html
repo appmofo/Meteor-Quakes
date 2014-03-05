@@ -1,0 +1,48 @@
+<head>
+  <title>Quake Watcher - Meteor Demo</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+              <link href="http://fonts.googleapis.com/css?family=Electrolize:400,500,900" rel="stylesheet" />
+</head>
+ 
+<body>
+{{#constant}}
+	{{>nav}}
+{{/constant}}
+{{renderPage}}
+</body>
+
+<template name="nav">
+                <!-- Nav -->
+                <nav id="nav">
+                        <ul class="container">
+                                <li>
+                                        <a href="/" class="icon-earth icon"></a>
+                                </li>
+                                <li>
+                                        <a href="/list" class="icon-list icon"></a>
+                                </li>
+                        </ul>
+                </nav>
+</template>
+ 
+<template name="quakelist">
+<div id="items-view">
+      {{#if loading}}
+        Loading...
+      {{else}}
+        <ul id="item-list">
+          {{#each quakes}}
+            <li><p>Location: {{properties.title}} lat: {{geometry.coordinates}}</p></li>
+          {{/each}}
+        </ul>
+      {{/if}}
+</div>
+</template>
+
+<template name="map">
+<div id="quakemap">
+  {{#constant}}
+    <div id="map_canvas" class="map"></div>
+  {{/constant}}
+</div>
+</template>

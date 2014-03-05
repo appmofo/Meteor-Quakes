@@ -1,0 +1,42 @@
+{
+  "meteor": {},
+  "dependencies": {
+    "basePackages": {
+      "topojson": {},
+      "leaflet": {},
+      "transitioner": {}
+    },
+    "packages": {
+      "topojson": {
+        "git": "https://github.com/vsivsi/meteor-topojson.git",
+        "tag": "v0.0.1",
+        "commit": "213cba5fb3429b1396ffee0fe4990832187d8a0d"
+      },
+      "leaflet": {
+        "git": "https://github.com/bevanhunt/meteor-leaflet.git",
+        "tag": "v0.3.6",
+        "commit": "d9e3bdb824145c1078e52945909bb1cf38724da5"
+      },
+      "transitioner": {
+        "git": "https://github.com/tmeasday/meteor-transitioner.git",
+        "tag": "v0.2.4",
+        "commit": "33ca36ff84e9b9b7a500ec86e2332245b998ef3e"
+      },
+      "router": {
+        "git": "https://github.com/tmeasday/meteor-router.git",
+        "tag": "v0.5.4.1",
+        "commit": "d00e380dda2184b70e909fc4a0fb5358d602c586"
+      },
+      "page-js-ie-support": {
+        "git": "https://github.com/tmeasday/meteor-page-js-ie-support.git",
+        "tag": "v1.3.5",
+        "commit": "b99ed8380aefd10b2afc8f18d9eed4dd0d8ea9cb"
+      },
+      "HTML5-History-API": {
+        "git": "https://github.com/tmeasday/meteor-HTML5-History-API.git",
+        "tag": "v4.0.0",
+        "commit": "dc4965f1424cfca625ec3fbea17eace03f8e32c5"
+      }
+    }
+  }
+}
