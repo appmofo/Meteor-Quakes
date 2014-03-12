@@ -1,6 +1,8 @@
 Meteor-Quakes
 =============
 
+See a live Demo at http://quakes.appmofo.com
+
 Meteor.js demo using Leaflet.js and Seismic data from http://earthquake.usgs.gov/
 
 This app demonstrates live data updates using meteor. The quakes collection is updated every minute.
