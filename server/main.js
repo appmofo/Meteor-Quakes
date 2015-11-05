@@ -79,6 +79,14 @@ Meteor.methods({
 	_.each(rlist, function(d) {
                 Quakes.remove(d);
 	});
+    },
+    insertQuake: function() {
+	f = {"type":"Feature","properties":{"mag":8.8,"place":"A Fake Place we addedd!","time":1446554106000,"updated":1446554848567,"tz":-540,"url":"http://earthquake.usgs.gov/earthquakes/eventpage/ak11768646","detail":"http://earthquake.usgs.gov/earthquakes/feed/v1.0/detail/ak11768646.geojson","felt":null,"cdi":null,"mmi":null,"alert":null,"status":"automatic","tsunami":0,"sig":50,"net":"ak","code":"11768646","ids":",ak11768646,","sources":",ak,","types":",general-link,geoserve,nearby-cities,origin,tectonic-summary,","nst":null,"dmin":null,"rms":0.75,"gap":null,"magType":"ml","type":"earthquake","title":"A Fake Place we addedd! "},"geometry":{"type":"Point","coordinates":[141.0591,-50.7361,27.3]},"id":"ak11768646"};
+	Quakes.insert(f);
+	console.log("Inserting...");
+    },
+    deleteQuake: function() {
+	Quakes.remove({"id":"ak11768646"});
     }
 });
 /*

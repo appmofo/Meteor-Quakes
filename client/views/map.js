@@ -23,8 +23,26 @@ var initialize = function(element, centroid, zoom, features) {
 	}).setView(new L.LatLng(centroid[0], centroid[1]), zoom);
 
 	L.tileLayer('http://server.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}', {
-		opacity : .5
+		opacity : 0.8
 	}).addTo(map);
+/*
+L.tileLayer('http://{s}.tile.openweathermap.org/map/pressure_cntr/{z}/{x}/{y}.png', {
+	attribution: 'Map data © OpenWeatherMap',
+	opacity: 0.2,
+    maxZoom : 14
+}).addTo(map);
+*/
+//Style Options
+L.crosshairs({
+  style: {
+    opacity: 0.6,
+    fillOpacity: 0,
+    weight: 1,
+    color: '#333',
+    radius: 1
+  }
+});
+L.crosshairs().addTo(map);
 
 	map.attributionControl.setPrefix('');
 	// Fit bounds
@@ -163,6 +181,82 @@ Template.map.rendered = function() {
 			drawMarkers();
 		}, 60000);
 
+		map.on('touchstart touchmove touchend', function(e) {
+		var touchToMouse = function(event) {
+		    if (event.touches.length > 1) return; //allow default multi-touch gestures to work
+		    var touch = event.changedTouches[0];
+		    var type = "";
+    
+		    switch (event.type) {
+		    case "touchstart": 
+		        type = "mousemove"; break;
+		    case "touchmove":  
+		        type="mousemove";   break;
+		    case "touchend":   
+		        type="mousemove";     break;
+		    default: 
+		        return;
+		    }
+	        var simulatedEvent = document.createEvent("MouseEvent");
+		    simulatedEvent.initMouseEvent(type, true, true, window, 1, 
+		            touch.screenX, touch.screenY, 
+		            touch.clientX, touch.clientY, false, 
+		            false, false, false, 0, null);
+    
+		    touch.target.dispatchEvent(simulatedEvent);
+		    event.preventDefault();
+		};
+		element.ontouchstart = touchToMouse;
+		element.ontouchmove = touchToMouse;
+		element.ontouchend = touchToMouse;
+		});
+
 		var self = this;
 		map._resetView(map.getCenter(), map.getZoom(), true); //rerender layers
+
+		var click = document.getElementById('click'),
+		mousemove = document.getElementById('mousemove');
+
+		map.on('mousemove', function(e) {
+			console.log("event:",e);
+		    window["mousemove"].innerHTML = '<br/>Lat: ' + e.latlng.lat.toString() + '<br/>Lng: ' + e.latlng.lng.toString();
+		});
+
+		var geocoder ;
+		map.on('click', function(e) {
+                   geocoder = new google.maps.Geocoder();
+                   var latlng = new google.maps.LatLng(e.latlng.lat, e.latlng.lng);
+		   window["click"].innerHTML = 'Lat: ' + e.latlng.lat.toString() + '<br/>Lng: ' + e.latlng.lng.toString();
+                   geocoder.geocode({'latLng': latlng}, function(results, status)
+                    {
+                        if (status == google.maps.GeocoderStatus.OK)
+                         {
+                                if (results[0])
+                                {
+                                    var add= results[0].formatted_address ;
+                                    var  value=add.split(",");
+
+                                    count=value.length;
+                                    country=value[count-1];
+                                    state=value[count-2];
+                                    city=value[count-3];
+                                    var newstr = value.toString().replace(/, /gi, '<br/>');
+                                    console.log("data: " + newstr);
+                                    console.log("city name is: " + city);
+				    console.log(window,e);
+                                    window["click"].innerHTML = newstr;
+                                    window["click"].innerHTML += '<br/>Lat: ' + e.latlng.lat.toString() + '<br/>Lng: ' + e.latlng.lng.toString();
+                                }
+                                else
+                                {
+                          console.log("address not found");
+                                }
+                        }
+                         else
+                        {
+                        //document.getElementById("location").innerHTML="Geocoder failed due to: " + status;
+                        console.log("Geocoder failed due to: " + status);
+                        }
+                     });
+                    });
 };
